@@ -21,7 +21,7 @@ public class Preferences {
     }
 
     /**
-     * @param id              Google ID of the user, which preferences are represented by this object.
+     * @param id              Google ID of the user, whose preferences are represented by this object.
      * @param points          Number of points which data is aggregated to.
      * @param period          Number of minutes which data is processed from.
      * @param aggregationTime Number of minutes constituting the time interval for the task scheduler.
