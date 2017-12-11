@@ -5,11 +5,9 @@ package pl.edu.agh.iet.dts.ui.controller.json;
  */
 public class UserJSON {
 
-    public String userID;
-
-    public int outputPoints;
-    public int timePeriod;
-    public int updateTime;
+    public int points;
+    public int period;
+    public int aggregationTime;
 
 
     @Override
@@ -18,10 +16,9 @@ public class UserJSON {
 
         builder
                 .append("{\n")
-                .append("\tuserID : ").append(userID).append(",\n")
-                .append("\toutputPoints : ").append(outputPoints).append(",\n")
-                .append("\ttimePeriod : ").append(timePeriod).append(",\n")
-                .append("\tupdateTime : ").append(updateTime).append("\n")
+                .append("\tpoints : ").append(points).append(",\n")
+                .append("\tperiod : ").append(period).append(",\n")
+                .append("\taggregationTime : ").append(aggregationTime).append("\n")
                 .append("}");
         return builder.toString();
     }
