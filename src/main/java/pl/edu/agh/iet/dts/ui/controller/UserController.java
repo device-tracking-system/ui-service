@@ -11,6 +11,7 @@ import pl.edu.agh.iet.dts.ui.persistence.repository.PreferencesRepository;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
@@ -22,6 +23,12 @@ public class UserController {
 
     @Autowired PreferencesRepository preferencesRepository;
 
+
+    @RequestMapping(value = "/preferences", method = GET)
+    public Preferences getUserPreferences(@PathVariable("userID") String userID) {
+        checkArgument(preferencesRepository.exists(userID));
+        return preferencesRepository.findOne(userID);
+    }
 
     @RequestMapping(value = "/preferences", method = POST)
     public void postUserPreferences(@PathVariable("userID") String userID, @RequestBody PreferencesJSON preferencesJSON) {
