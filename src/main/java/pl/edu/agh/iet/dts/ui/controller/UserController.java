@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.edu.agh.iet.dts.ui.controller.json.UserJSON;
+import pl.edu.agh.iet.dts.ui.controller.json.PreferencesJSON;
 import pl.edu.agh.iet.dts.ui.persistence.domain.Preferences;
 import pl.edu.agh.iet.dts.ui.persistence.repository.PreferencesRepository;
 
@@ -24,13 +24,14 @@ public class UserController {
 
 
     @RequestMapping(value = "/preferences", method = POST)
-    public void postUser(@PathVariable("userID") String userID, @RequestBody UserJSON userJSON) {
-        checkArgument(0 < userJSON.points && 10 >= userJSON.points);
-        checkArgument(0 < userJSON.period && 60 >= userJSON.period);
-        checkArgument(0 < userJSON.aggregationTime);
+    public void postUserPreferences(@PathVariable("userID") String userID, @RequestBody PreferencesJSON preferencesJSON) {
+        checkArgument(0 < preferencesJSON.points && 10 >= preferencesJSON.points);
+        checkArgument(0 < preferencesJSON.period && 60 >= preferencesJSON.period);
+        checkArgument(0 < preferencesJSON.aggregationTime);
         checkNotNull(userID);
 
-        Preferences preferences = new Preferences(userID, userJSON.points, userJSON.period, userJSON.aggregationTime);
+        final Preferences preferences =
+                new Preferences(userID, preferencesJSON.points, preferencesJSON.period, preferencesJSON.aggregationTime);
         preferencesRepository.save(preferences);
     }
 

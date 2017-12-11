@@ -26,7 +26,7 @@ public class Preferences {
      * @param period          Number of minutes which data is processed from.
      * @param aggregationTime Number of minutes constituting the time interval for the task scheduler.
      */
-    public Preferences(String id, int points, int period, int aggregationTime) {
+    public Preferences(final String id, final int points, final int period, final int aggregationTime) {
         this.id = id;
         this.period = period;
         this.points = points;

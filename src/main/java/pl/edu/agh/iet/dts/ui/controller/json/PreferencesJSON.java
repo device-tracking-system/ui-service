@@ -3,7 +3,7 @@ package pl.edu.agh.iet.dts.ui.controller.json;
 /**
  * @author Bartłomiej Grochal
  */
-public class UserJSON {
+public class PreferencesJSON {
 
     public int points;
     public int period;
