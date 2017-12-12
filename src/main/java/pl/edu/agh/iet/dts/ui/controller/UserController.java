@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.edu.agh.iet.dts.ui.controller.json.PreferencesJSON;
+import pl.edu.agh.iet.dts.ui.persistence.domain.AggregatedPositions;
 import pl.edu.agh.iet.dts.ui.persistence.domain.Preferences;
+import pl.edu.agh.iet.dts.ui.persistence.repository.AggregatedPositionsRepository;
 import pl.edu.agh.iet.dts.ui.persistence.repository.PreferencesRepository;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -22,6 +24,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class UserController {
 
     @Autowired PreferencesRepository preferencesRepository;
+    @Autowired AggregatedPositionsRepository aggregatedPositionsRepository;
 
 
     @RequestMapping(value = "/preferences", method = GET)
@@ -40,6 +43,12 @@ public class UserController {
         final Preferences preferences =
                 new Preferences(userID, preferencesJSON.points, preferencesJSON.period, preferencesJSON.aggregationTime);
         preferencesRepository.save(preferences);
+    }
+
+    @RequestMapping(value = "/positions", method = GET)
+    public AggregatedPositions getUserPositions(@PathVariable("userID") String userID) {
+        checkArgument(aggregatedPositionsRepository.exists(userID));
+        return aggregatedPositionsRepository.findOne(userID);
     }
 
 }
