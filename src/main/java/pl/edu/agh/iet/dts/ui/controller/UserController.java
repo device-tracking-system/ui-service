@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.edu.agh.iet.dts.ui.controller.json.PreferencesJSON;
+import pl.edu.agh.iet.dts.ui.messaging.AggregationTaskScheduler;
+import pl.edu.agh.iet.dts.ui.messaging.format.AggregationTask;
 import pl.edu.agh.iet.dts.ui.persistence.domain.AggregatedPositions;
 import pl.edu.agh.iet.dts.ui.persistence.domain.Preferences;
 import pl.edu.agh.iet.dts.ui.persistence.repository.AggregatedPositionsRepository;
@@ -23,8 +25,10 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RequestMapping(value = "/users/{userID}")
 public class UserController {
 
-    @Autowired PreferencesRepository preferencesRepository;
-    @Autowired AggregatedPositionsRepository aggregatedPositionsRepository;
+    @Autowired private PreferencesRepository preferencesRepository;
+    @Autowired private AggregatedPositionsRepository aggregatedPositionsRepository;
+
+    @Autowired private AggregationTaskScheduler aggregationTaskScheduler;
 
 
     @RequestMapping(value = "/preferences", method = GET)
@@ -43,12 +47,22 @@ public class UserController {
         final Preferences preferences =
                 new Preferences(userID, preferencesJSON.points, preferencesJSON.period, preferencesJSON.aggregationTime);
         preferencesRepository.save(preferences);
+
+        scheduleAggregationTask(preferences.getId(), preferences.getPoints(), preferences.getPeriod(), preferences.getAggregationTime());
     }
 
     @RequestMapping(value = "/positions", method = GET)
     public AggregatedPositions getUserPositions(@PathVariable("userID") String userID) {
         checkArgument(aggregatedPositionsRepository.exists(userID));
         return aggregatedPositionsRepository.findOne(userID);
+    }
+
+
+    private void scheduleAggregationTask(final String id, final int points, final int period, int aggregationTime) {
+        final long timestamp = aggregatedPositionsRepository.exists(id) ?
+                aggregatedPositionsRepository.findOne(id).getTimestamp() : 0L;
+        final AggregationTask aggregationTask = new AggregationTask(id, points, period, timestamp);
+        aggregationTaskScheduler.scheduleTask(aggregationTask, ((long) aggregationTime) * 60 * 1000);
     }
 
 }
