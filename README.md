@@ -9,6 +9,7 @@ The UI Service serves the client web application for device tracking.
 You need to have the following tools installed and configured:
   - Java SE 1.8+
   - Maven 3.0+
+  - MongoDB 3.0+
 
 ## Installation and Commissioning
 In order to run the UI service, follow these steps:
@@ -19,7 +20,11 @@ In order to run the UI service, follow these steps:
 ```
 mvn install
 ``` 
-  5. Run the built `*.jar` file passing the location of configuration files by typing:
+  5. Run the MongoDB Server by typing:
+```
+mongod --dbpath [path to the directory containing database files]
+```
+  6. Run the built `*.jar` file passing the location of configuration files by typing:
 ```
 java -jar target/ui-service-1.0-SNAPSHOT.jar --spring.config.location=classpath:pl/edu/agh/iet/dts/ui/
 ```
