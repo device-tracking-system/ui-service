@@ -2,7 +2,7 @@ package pl.edu.agh.iet.dts.ui.persistence.domain;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import pl.edu.agh.iet.dts.ui.persistence.domain.helper.GPSPosition;
+import pl.edu.agh.iet.dts.ui.helper.GPSPosition;
 
 /**
  * @author Bartłomiej Grochal
