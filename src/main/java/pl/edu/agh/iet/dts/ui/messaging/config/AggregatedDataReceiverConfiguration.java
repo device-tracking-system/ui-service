@@ -13,21 +13,22 @@ import org.springframework.context.annotation.Configuration;
  * @author Bartłomiej Grochal
  */
 @Configuration
-public class AggregationTaskSenderConfiguration {
+public class AggregatedDataReceiverConfiguration {
+
 
     @Bean
-    public Queue AggregationTaskQueue(@Value("${messaging.aggregationTaskSender.queueName}") final String queueName) {
+    public Queue AggregatedDataQueue(@Value("${messaging.aggregatedDataReceiver.queueName}") final String queueName) {
         return new Queue(queueName, false);
     }
 
     @Bean
-    public TopicExchange AggregationTaskTopicExchange(@Value("${messaging.aggregationTaskSender.exchangeName}") String exchangeName) {
+    public TopicExchange AggregatedDataTopicExchange(@Value("${messaging.aggregatedDataReceiver.exchangeName}") String exchangeName) {
         return new TopicExchange(exchangeName);
     }
 
     @Bean
-    public Binding AggregationTaskTopicExchangeToQueueBinding(@Qualifier("AggregationTaskQueue") Queue queue,
-                                                              @Qualifier("AggregationTaskTopicExchange") TopicExchange topicExchange) {
+    public Binding TopicExchangeToQueueBinding(@Qualifier("AggregatedDataQueue") Queue queue,
+                                               @Qualifier("AggregatedDataTopicExchange") TopicExchange topicExchange) {
         return BindingBuilder
                 .bind(queue)
                 .to(topicExchange)
