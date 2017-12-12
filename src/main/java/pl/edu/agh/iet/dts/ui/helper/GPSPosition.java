@@ -1,4 +1,4 @@
-package pl.edu.agh.iet.dts.ui.persistence.domain.helper;
+package pl.edu.agh.iet.dts.ui.helper;
 
 /**
  * @author Bartłomiej Grochal
