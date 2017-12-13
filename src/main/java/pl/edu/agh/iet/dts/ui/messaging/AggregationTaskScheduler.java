@@ -35,7 +35,7 @@ public class AggregationTaskScheduler {
 
 
     public synchronized void scheduleTask(final AggregationTask aggregationTask, final long aggregationTime) {
-        final String id = aggregationTask.getId();
+        final String id = aggregationTask.getOwnerId();
         final Optional<ScheduledFuture> currentScheduler = Optional.ofNullable(registeredSchedulers.get(id));
         currentScheduler.ifPresent(scheduler -> scheduler.cancel(false));
 

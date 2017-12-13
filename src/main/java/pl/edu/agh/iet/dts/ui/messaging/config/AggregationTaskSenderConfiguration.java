@@ -2,8 +2,8 @@ package pl.edu.agh.iet.dts.ui.messaging.config;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.TopicExchange;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -17,21 +17,22 @@ public class AggregationTaskSenderConfiguration {
 
     @Bean
     public Queue AggregationTaskQueue(@Value("${messaging.aggregationTaskSender.queueName}") final String queueName) {
-        return new Queue(queueName, false);
+        return new Queue(queueName, true, false, false);
     }
 
     @Bean
-    public TopicExchange AggregationTaskTopicExchange(@Value("${messaging.aggregationTaskSender.exchangeName}") String exchangeName) {
-        return new TopicExchange(exchangeName);
+    public DirectExchange AggregationTaskDirectExchange(@Value("${messaging.aggregationTaskSender.exchangeName}") final String exchangeName) {
+        return new DirectExchange(exchangeName, true, false);
     }
 
     @Bean
-    public Binding AggregationTaskTopicExchangeToQueueBinding(@Qualifier("AggregationTaskQueue") Queue queue,
-                                                              @Qualifier("AggregationTaskTopicExchange") TopicExchange topicExchange) {
+    public Binding AggregationTaskDirectExchangeToQueueBinding(@Qualifier("AggregationTaskQueue") final Queue queue,
+                                                               @Qualifier("AggregationTaskDirectExchange") final DirectExchange exchange,
+                                                               @Value("${messaging.aggregationTaskSender.bindingName}") final String bindingName) {
         return BindingBuilder
                 .bind(queue)
-                .to(topicExchange)
-                .with(queue.getName());
+                .to(exchange)
+                .with(bindingName);
     }
 
 }

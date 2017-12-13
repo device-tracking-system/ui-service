@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public class AggregationTask implements Serializable {
 
-    private final String id;
+    private final String ownerId;
 
     private final int points;
     private final int period;
@@ -18,8 +18,8 @@ public class AggregationTask implements Serializable {
         this(null, 0, 0, -1);
     }
 
-    public AggregationTask(String id, int points, int period, long timestamp) {
-        this.id = id;
+    public AggregationTask(final String ownerId, final int points, final int period, final long timestamp) {
+        this.ownerId = ownerId;
         this.points = points;
         this.period = period;
         this.timestamp = timestamp;
@@ -32,7 +32,7 @@ public class AggregationTask implements Serializable {
 
         builder
                 .append("{\n")
-                .append("\tid : ").append(id).append(",\n")
+                .append("\townerId : ").append(ownerId).append(",\n")
                 .append("\tpoints : ").append(points).append(",\n")
                 .append("\tperiod : ").append(period).append(",\n")
                 .append("\ttimestamp : ").append(timestamp).append("\n")
@@ -40,8 +40,8 @@ public class AggregationTask implements Serializable {
         return builder.toString();
     }
 
-    public String getId() {
-        return id;
+    public String getOwnerId() {
+        return ownerId;
     }
 
     public int getPoints() {
