@@ -1,10 +1,7 @@
 package pl.edu.agh.iet.dts.ui.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.iet.dts.ui.controller.json.PreferencesJSON;
 import pl.edu.agh.iet.dts.ui.messaging.AggregationTaskScheduler;
 import pl.edu.agh.iet.dts.ui.messaging.format.AggregationTask;
@@ -15,6 +12,7 @@ import pl.edu.agh.iet.dts.ui.persistence.repository.PreferencesRepository;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
+import static org.springframework.http.HttpStatus.NOT_ACCEPTABLE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -55,6 +53,11 @@ public class UserController {
     public AggregatedPositions getUserPositions(@PathVariable("userID") String userID) {
         checkArgument(aggregatedPositionsRepository.exists(userID));
         return aggregatedPositionsRepository.findOne(userID);
+    }
+
+    @ResponseStatus(code = NOT_ACCEPTABLE, reason = "Improper request argument")
+    @ExceptionHandler(value = {IllegalArgumentException.class, NullPointerException.class})
+    public void handlePreconditionsException() {
     }
 
 
