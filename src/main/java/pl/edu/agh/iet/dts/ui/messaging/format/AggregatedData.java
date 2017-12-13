@@ -9,7 +9,7 @@ import java.util.Arrays;
  */
 public class AggregatedData {
 
-    private final String id;
+    private final String ownerId;
 
     private final GPSPosition[] data;
     private final long timestamp;
@@ -19,8 +19,8 @@ public class AggregatedData {
         this(null, null, -1);
     }
 
-    public AggregatedData(final String id, final GPSPosition[] data, final long timestamp) {
-        this.id = id;
+    public AggregatedData(final String ownerId, final GPSPosition[] data, final long timestamp) {
+        this.ownerId = ownerId;
         this.data = data;
         this.timestamp = timestamp;
     }
@@ -32,15 +32,15 @@ public class AggregatedData {
 
         builder
                 .append("{\n")
-                .append("\tid : ").append(id).append(",\n")
+                .append("\townerId : ").append(ownerId).append(",\n")
                 .append("\tdata : ").append(Arrays.toString(data)).append(",\n")
                 .append("\ttimestamp : ").append(timestamp).append("\n")
                 .append("}");
         return builder.toString();
     }
 
-    public String getId() {
-        return id;
+    public String getOwnerId() {
+        return ownerId;
     }
 
     public GPSPosition[] getData() {
