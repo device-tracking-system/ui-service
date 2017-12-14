@@ -33,3 +33,23 @@ rabbitmq-server
 ```
 java -jar target/ui-service-1.0-SNAPSHOT.jar --spring.config.location=classpath:pl/edu/agh/iet/dts/ui/
 ```
+
+## Building the Docker image
+When the `*.jar` file is successfully built, a Docker image for the production environment may be created by applying
+following steps:
+  1. Enter the root directory of this repository.
+  2. Build the Docker image by typing:
+```
+docker build . -t ui-service
+```
+  3. In order to run the image, type:
+```
+docker run -p 8081:8081 -t ui-service
+```
+
+## Testing
+In order to test the application locally, run the built `*.jar` file by typing:
+```
+java -jar target/ui-service-1.0-SNAPSHOT.jar --spring.profiles.active=test --spring.config.location=classpath:pl/edu/agh/iet/dts/ui/
+```
+and then execute specific tests.
