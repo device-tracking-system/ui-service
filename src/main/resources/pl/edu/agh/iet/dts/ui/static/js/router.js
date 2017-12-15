@@ -4,19 +4,14 @@ app.config(function ($routeProvider, $locationProvider) {
 
     $routeProvider
         .when('/app', {
-            templateUrl : 'index.html',
-            controller  : 'indexController'})
-        .when('/app/components/login', {
-            templateUrl : 'templates/login.html',
-            controller  : 'loginController'})
-        .when('/app/components/user-info', {
-            templateUrl: 'templates/userInfo.html'})
-        .when('/app/components/unauthenticated', {
-            templateUrl: 'templates/unauthenticated.html'})
+            templateUrl: 'templates/login.html',
+            controller : 'loginController'})
         .when('/app/components/map', {
-            templateUrl: 'templates/map.html'})
+            templateUrl: 'templates/map.html',
+            controller : 'mapController'})
         .when('/app/components/user-form', {
-            templateUrl: 'templates/userForm.html'})
+            templateUrl: 'templates/userForm.html',
+            controller : 'userFormController'})
         .otherwise({
             redirectTo: '/app'
         });

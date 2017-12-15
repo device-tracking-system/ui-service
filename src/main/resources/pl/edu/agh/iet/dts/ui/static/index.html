@@ -24,16 +24,32 @@
     <script type="text/javascript" src="webjars/angular-route/1.6.6/angular-route.min.js"></script>
 
     <!-- Custom JS scripts -->
+    <link rel="stylesheet" href="css/index.css"/>
+
+    <!-- Custom JS scripts -->
     <script type="text/javascript" src="js/angularMain.js"></script>
     <script type="text/javascript" src="js/router.js"></script>
 
-    <script type="text/javascript" src="js/controller/indexController.js"></script>
     <script type="text/javascript" src="js/controller/loginController.js"></script>
+    <script type="text/javascript" src="js/controller/mapController.js"></script>
+    <script type="text/javascript" src="js/controller/userFormController.js"></script>
 </head>
 
 <body ng-app="app">
-    <h1>Device Tracking System</h1>
-    <div class="container"></div>
+    <div>
+        <div class="header">
+            <div class="centered">
+                <h3 class="text-muted">Device Tracking System</h3>
+            </div>
+        </div>
+        <div ng-view></div>
+        <div class="footer">
+            <div class="centered">
+                <p class="text-center">Created by: Grochal Bartłomiej, Owczarek Mateusz, Żelazko Rafał<br/>AGH UST Krakow, Faculty of Computer
+                Science, Electronics and Telecommunications</p>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
