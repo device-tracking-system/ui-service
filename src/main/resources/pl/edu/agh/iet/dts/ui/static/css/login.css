@@ -1,0 +1,17 @@
+.message {
+  font-size: 24px;
+  margin: auto;
+  position: absolute;
+  top: 50%;
+  width: 100%;
+}
+
+.center {
+  text-align: center;
+}
+
+@media only screen and (max-height: 500px) {
+  .message {
+    display: none;
+  }
+}

@@ -1,6 +1,6 @@
-app.controller('loginController', function ($scope, $location) {
+app.controller('loginController', function ($http, $scope, $location) {
     
-    $scope.showMap = function () {
+    $scope.signIn = function () {
         $location.path('/app/components/map').replace();
     };
     

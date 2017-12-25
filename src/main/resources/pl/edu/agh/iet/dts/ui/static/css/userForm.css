@@ -1,0 +1,21 @@
+.form {
+  margin: 100px auto;
+  width: 90%;
+}
+
+.input {
+  border: 2px solid;
+  border-radius: 5px;
+  box-sizing: border-box;
+  display: block;
+  font: inherit;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 21px auto;
+  padding: 3px 5px;
+  width: 500px;
+}
+
+.input:focus {
+  outline:none;
+}

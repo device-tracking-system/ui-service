@@ -1,4 +1,4 @@
-app.controller('mapController', function ($scope, $location) {
+app.controller('mapController', function ($http, $scope, $location) {
     
     $scope.signOut = function () {
         $location.path('/app/components/login').replace();

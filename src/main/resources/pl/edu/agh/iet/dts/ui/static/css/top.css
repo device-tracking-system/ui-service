@@ -1,0 +1,25 @@
+h1, h2, h3 {
+  font-weight: 400;
+}
+
+.title {
+  flex-grow: 5;
+}
+
+.user-info {
+  flex-grow: 2;
+}
+
+.login {
+  margin-left: auto;
+}
+
+.login:hover {
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 900px) {
+  .user-info {
+    display: none;
+  }
+}

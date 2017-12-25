@@ -12,10 +12,6 @@
     <!-- jQuery -->
     <script type="text/javascript" src="webjars/jquery/3.2.1/jquery.min.js"></script>
 
-    <!--Bootstrap -->
-    <link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"/>
-    <script type="text/javascript" src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
-
     <!-- Font Awesome -->
     <link rel="stylesheet" href="webjars/font-awesome/4.7.0/css/font-awesome.min.css"/>
 
@@ -25,6 +21,10 @@
 
     <!-- Custom JS scripts -->
     <link rel="stylesheet" href="css/index.css"/>
+    <link rel="stylesheet" href="css/top.css"/>
+    <link rel="stylesheet" href="css/login.css"/>
+    <link rel="stylesheet" href="css/map.css"/>
+    <link rel="stylesheet" href="css/userForm.css"/>
 
     <!-- Custom JS scripts -->
     <script type="text/javascript" src="js/angularMain.js"></script>
@@ -36,20 +36,12 @@
 </head>
 
 <body ng-app="app">
-    <div>
-        <div class="header">
-            <div class="centered">
-                <h3 class="text-muted">Device Tracking System</h3>
-            </div>
+    <section class="content" ng-view></section>
+    <footer class="footer">
+        <div class="internal">
+            <p class="center">Created by: Grochal Bartłomiej, Owczarek Mateusz, Żelazko Rafał<br/> AGH UST Krakow, Faculty of Computer Science, Electronics and Telecommunications</p>
         </div>
-        <div ng-view></div>
-        <div class="footer">
-            <div class="centered">
-                <p class="text-center">Created by: Grochal Bartłomiej, Owczarek Mateusz, Żelazko Rafał<br/>AGH UST Krakow, Faculty of Computer
-                Science, Electronics and Telecommunications</p>
-            </div>
-        </div>
-    </div>
+    </footer>
 </body>
 
 </html>
