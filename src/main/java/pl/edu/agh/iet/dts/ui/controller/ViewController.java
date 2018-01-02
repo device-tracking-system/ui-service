@@ -17,29 +17,4 @@ public class ViewController {
         return "forward:/";
     }
 
-    @RequestMapping(value = "/components/login", method = GET)
-    public String getLoginView() {
-        return "forward:/";
-    }
-
-    @RequestMapping(value = "/components/user-info", method = GET)
-    public String getUserInfoView() {
-        return "forward:/";
-    }
-
-    @RequestMapping(value = "/components/unauthenticated", method = GET)
-    public String getUnauthenticatedView() {
-        return "forward:/";
-    }
-
-    @RequestMapping(value = "/components/map", method = GET)
-    public String getMapView() {
-        return "forward:/";
-    }
-
-    @RequestMapping(value = "/components/user-form", method = GET)
-    public String getUserFormView() {
-        return "forward:/";
-    }
-
 }
