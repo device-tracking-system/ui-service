@@ -1,11 +1,15 @@
-app.controller('mapController', function ($http, $scope, $location) {
-    
-    $scope.signOut = function () {
-        $location.path('/app/components/login').replace();
+app.controller('mapController', ['$http', '$scope', function ($http, $scope) {
+
+    $scope.getData = function () {
+        $http.get('/users/' + $scope.userID + '/positions').then(
+            function (response) {
+                // TODO: Use this response object to draw a route on a map
+                console.log(response);
+            },
+            function (error) {
+                console.log(error);
+            }
+        );
     };
 
-    $scope.showPreferences = function () {
-        $location.path('/app/components/user-form').replace();
-    };
-
-});
+}]);

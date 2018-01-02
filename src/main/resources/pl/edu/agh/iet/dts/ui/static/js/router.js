@@ -4,14 +4,8 @@ app.config(function ($routeProvider, $locationProvider) {
 
     $routeProvider
         .when('/app', {
-            templateUrl: 'templates/login.html',
+            templateUrl: 'index.html',
             controller : 'loginController'})
-        .when('/app/components/map', {
-            templateUrl: 'templates/map.html',
-            controller : 'mapController'})
-        .when('/app/components/user-form', {
-            templateUrl: 'templates/userForm.html',
-            controller : 'userFormController'})
         .otherwise({
             redirectTo: '/app'
         });
