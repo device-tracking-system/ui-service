@@ -12,6 +12,10 @@
     <!-- jQuery -->
     <script type="text/javascript" src="webjars/jquery/3.2.1/jquery.min.js"></script>
 
+    <!--Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="webjars/font-awesome/4.7.0/css/font-awesome.min.css"/>
 
@@ -35,13 +39,33 @@
     <script type="text/javascript" src="js/controller/userFormController.js"></script>
 </head>
 
-<body ng-app="app">
-    <section class="content" ng-view></section>
-    <footer class="footer">
-        <div class="internal">
-            <p class="center">Created by: Grochal Bartłomiej, Owczarek Mateusz, Żelazko Rafał<br/> AGH UST Krakow, Faculty of Computer Science, Electronics and Telecommunications</p>
+<body ng-app="app" ng-controller="loginController">
+    <div class="header">
+        <div class="centered">
+            <h3 class="text-muted">Device Tracking System</h3>
         </div>
-    </footer>
+
+        <div ng-if="!authenticated" ng-include="'templates/login.html'"></div>
+        <div ng-if="authenticated" ng-include="'templates/userInfo.html'"></div>
+    </div>
+
+    <div>
+        <div ng-if="!authenticated" ng-include="'templates/unauthenticated.html'"></div>
+        <div ng-if="authenticated">
+            <div ng-include="'templates/map.html'"></div>
+
+            <!-- TODO: Pack this into a hideable pane opened by clicking the "hamburger" button (use Bootstrap Collapse
+            or similar) on the left- or right-hand side of the map (two-column layout), neither below nor above. -->
+            <div ng-include="'templates/userForm.html'"></div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="centered">
+            <p class="text-center">Created by: Grochal Bartłomiej, Owczarek Mateusz, Żelazko Rafał<br/>
+                AGH UST Krakow, Faculty of Computer Science, Electronics and Telecommunications</p>
+        </div>
+    </div>
 </body>
 
 </html>
