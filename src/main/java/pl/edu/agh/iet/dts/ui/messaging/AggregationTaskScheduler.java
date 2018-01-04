@@ -1,5 +1,6 @@
 package pl.edu.agh.iet.dts.ui.messaging;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.TaskScheduler;
@@ -40,7 +41,12 @@ public class AggregationTaskScheduler {
         currentScheduler.ifPresent(scheduler -> scheduler.cancel(false));
 
         ScheduledFuture newScheduler = threadPoolTaskScheduler.scheduleAtFixedRate(
-                () -> rabbitTemplate.convertAndSend(queueName, aggregationTask), aggregationTime);
+                () -> {
+                    rabbitTemplate.convertAndSend(queueName, aggregationTask);
+                    LoggerFactory.getLogger(AggregationTaskScheduler.class)
+                            .debug(String.format("[MSG %s] %s", queueName.replace('.', '/'), aggregationTask));
+
+                }, aggregationTime);
         registeredSchedulers.put(id, newScheduler);
     }
 

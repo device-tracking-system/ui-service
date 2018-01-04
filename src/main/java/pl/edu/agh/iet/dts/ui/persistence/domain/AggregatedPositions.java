@@ -4,6 +4,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import pl.edu.agh.iet.dts.ui.helper.GPSPosition;
 
+import java.util.Arrays;
+
 /**
  * @author Bartłomiej Grochal
  */
@@ -31,6 +33,18 @@ public class AggregatedPositions {
         this.timestamp = timestamp;
     }
 
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+
+        builder
+                .append("{\n")
+                .append("\tdata : ").append(Arrays.toString(data)).append(",\n")
+                .append("\ttimestamp : ").append(timestamp).append("\n")
+                .append("}");
+        return builder.toString();
+    }
 
     public String getId() {
         return id;

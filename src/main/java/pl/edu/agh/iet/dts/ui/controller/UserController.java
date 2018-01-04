@@ -1,5 +1,6 @@
 package pl.edu.agh.iet.dts.ui.controller;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.iet.dts.ui.controller.json.PreferencesJSON;
@@ -32,7 +33,12 @@ public class UserController {
     @RequestMapping(value = "/preferences", method = GET)
     public Preferences getUserPreferences(@PathVariable("userID") String userID) {
         checkArgument(preferencesRepository.exists(userID));
-        return preferencesRepository.findOne(userID);
+
+        final Preferences preferences = preferencesRepository.findOne(userID);
+
+        LoggerFactory.getLogger(UserController.class)
+                .debug(String.format("[GET /users/%s/preferences] %s", userID, preferences));
+        return preferences;
     }
 
     @RequestMapping(value = "/preferences", method = POST)
@@ -46,13 +52,20 @@ public class UserController {
                 new Preferences(userID, preferencesJSON.points, preferencesJSON.period, preferencesJSON.aggregationTime);
         preferencesRepository.save(preferences);
 
+        LoggerFactory.getLogger(UserController.class)
+                .debug(String.format("POST /users/%s/preferences] %s", userID, preferences));
         scheduleAggregationTask(preferences.getId(), preferences.getPoints(), preferences.getPeriod(), preferences.getAggregationTime());
     }
 
     @RequestMapping(value = "/positions", method = GET)
     public AggregatedPositions getUserPositions(@PathVariable("userID") String userID) {
         checkArgument(aggregatedPositionsRepository.exists(userID));
-        return aggregatedPositionsRepository.findOne(userID);
+
+        final AggregatedPositions aggregatedPositions = aggregatedPositionsRepository.findOne(userID);
+
+        LoggerFactory.getLogger(UserController.class)
+                .debug(String.format("GET /users/%s/positions] %s", userID, aggregatedPositions));
+        return aggregatedPositions;
     }
 
     @ResponseStatus(code = NOT_ACCEPTABLE, reason = "Improper request argument")

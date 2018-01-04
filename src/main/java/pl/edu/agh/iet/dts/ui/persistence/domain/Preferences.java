@@ -34,6 +34,19 @@ public class Preferences {
     }
 
 
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+
+        builder
+                .append("{\n")
+                .append("\tpoints : ").append(points).append(",\n")
+                .append("\tperiod : ").append(period).append(",\n")
+                .append("\taggregationTime : ").append(aggregationTime).append("\n")
+                .append("}");
+        return builder.toString();
+    }
+
     public String getId() {
         return id;
     }

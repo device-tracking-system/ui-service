@@ -53,3 +53,8 @@ In order to test the application locally, run the built `*.jar` file by typing:
 java -jar target/ui-service-1.0-SNAPSHOT.jar --spring.profiles.active=test --spring.config.location=classpath:pl/edu/agh/iet/dts/ui/
 ```
 and then execute specific tests.
+
+## Debugging
+In order to turn on debug logs for classes located in the `pl.edu.agh.iet.dts.*` package within this repository, please 
+activate the `test`  profile by setting the `--spring.profiles.active=[OTHER PROFILES],test` flag and adding the 
+`--debug` flag.
