@@ -44,8 +44,12 @@ docker build . -t ui-service
 ```
   3. In order to run the image, type:
 ```
-docker run -p 8081:8081 -t ui-service
+docker run -p 8081:8081 -p 44351:44321 -p 44353:44323 -t ui-service
 ```
+Please note that this docker container uses the Performance Co-Pilot (PCP) tool to gather data for system monitoring
+metrics. These values are accessed via the `44351` and `44353` ports. In order to visualize performance of this
+microservice, please enter the `[CONTAINER IP ADDRESS]:44353` value in the `Hostname` field placed in the Netflix Vector
+dashboard.
 
 ## Testing
 In order to test the application locally, run the built `*.jar` file by typing:
