@@ -12,4 +12,6 @@ app.controller('mapController', ['$http', '$scope', function ($http, $scope) {
         );
     };
 
+    // $scope.getData();
+
 }]);

@@ -25,13 +25,19 @@ body {
 
 .footer {
   box-shadow: 0 -10px 10px #888;
-  height: 110px;
+  height: 90px;
 }
 
-.container {
+.top-container {
   align-items: center;
   display: flex;
   height: 90px;
+}
+
+.mid-container {
+  height: 700px;
+  margin: auto;
+  text-align: center;
 }
 
 .internal {

@@ -1,15 +1,17 @@
-<!-- TODO: Add form labels -->
-
-<div ng-controller="userFormController">
-    <div class="user-form centered">
-        <form class="form" ng-submit="submitForm()">
-            <input class="input" type="number" name="time-period" placeholder="Time period"
-                   ng-model="period"/>
-            <input class="input" type="number" name="aggregate-points" placeholder="Aggregate points"
-                   ng-model="points"/>
-            <input class="input" type="number" name="update-every" placeholder="Update every"
-                   ng-model="aggregationTime"/>
-            <input class="button" id="submit" type="submit" name="submit" value="Submit"/>
-        </form>
+<form class="my-form" ng-submit="submitForm()" ng-controller="userFormController">
+    <div class="form-group">
+        <label for="time-period">Time period:</label>
+        <input type="number" class="form-control" id="time-period" ng-model="period">
     </div>
-</div>
+    <div class="form-group">
+        <label for="aggregate-points">Aggregate points:</label>
+        <input type="number" class="form-control" id="aggregate-points" ng-model="points">
+    </div>
+    <div class="form-group">
+        <label for="update-every">Update every:</label>
+        <input type="number" class="form-control" id="update-every" ng-model="aggregationTime">
+    </div>
+    <div class="center">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>

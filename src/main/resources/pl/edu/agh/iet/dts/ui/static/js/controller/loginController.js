@@ -33,6 +33,15 @@ app.controller('loginController', ['$http', '$scope', '$location', function ($ht
         );
     };
 
+    $('.my-toggle').click(function() {
+        property = $('.form-panel').css('display');
+        
+        if (property === 'none') {
+            $('.form-panel').css('display', 'inline-block');
+        } else {
+            $('.form-panel').css('display', 'none');
+        }
+    });
 
     $scope.getUser();
 

@@ -25,4 +25,6 @@ app.controller('userFormController', ['$http', '$scope', function ($http, $scope
         );
     };
 
+    // $scope.getPreferences();
+
 }]);
