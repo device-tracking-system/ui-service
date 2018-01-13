@@ -25,9 +25,17 @@ mvn install
 ```
 mongod --dbpath [path to the directory containing database files]
 ```
+or using the official Docker image:
+```
+docker run -p 27017:27017 mongo
+```
   6. Run the RabbitMQ Message Broker by typing:
 ```
 rabbitmq-server
+```
+or using the official Docker image:
+```
+docker run -p 5672:5672 -p 15672:15672 rabbitmq:3-management
 ```
   7. Run the built `*.jar` file passing the location of configuration files by typing:
 ```
@@ -44,7 +52,7 @@ docker build . -t ui-service
 ```
   3. In order to run the image, type:
 ```
-docker run -p 8081:8081 -p 44351:44321 -p 44353:44323 -t ui-service
+docker run -p 8081:8081 -p 44351:44321 -p 44353:44323 -e CONFIGURATION_SERVER_IP=[CONFIGURATION SERVER HOST IP ADDRESS] -e EUREKA_IP=[EUREKA HOST IP ADDRESS] -e ZIPKIN_IP=[ZIPKIN HOST IP ADDRESS] -e MONGODB_IP=[MONGODB HOST IP ADDRESS] -e RABBITMQ_IP=[RABBITMQ HOST IP ADDRESS] -t ui-service
 ```
 Please note that this docker container uses the Performance Co-Pilot (PCP) tool to gather data for system monitoring
 metrics. These values are accessed via the `44351` and `44353` ports. In order to visualize performance of this
@@ -60,5 +68,5 @@ and then execute specific tests.
 
 ## Debugging
 In order to turn on debug logs for classes located in the `pl.edu.agh.iet.dts.*` package within this repository, please 
-activate the `test`  profile by setting the `--spring.profiles.active=[OTHER PROFILES],test` flag and adding the 
+activate the `debug`  profile by setting the `--spring.profiles.active=[OTHER PROFILES],debug` flag and adding the 
 `--debug` flag.

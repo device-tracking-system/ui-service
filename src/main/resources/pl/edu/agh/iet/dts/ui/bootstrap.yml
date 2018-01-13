@@ -12,4 +12,4 @@ spring:
 
   cloud:
     config:
-      uri: http://10.27.244.36:8888
+      uri: http://${CONFIGURATION_SERVER_IP}:8888
