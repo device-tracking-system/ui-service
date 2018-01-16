@@ -45,3 +45,8 @@ body {
   padding: 20px 0;
   width: 70%;
 }
+
+.lastSync {
+  font-size: 16px;
+  font-weight: 700;
+}

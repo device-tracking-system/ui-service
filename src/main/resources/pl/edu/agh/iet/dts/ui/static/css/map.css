@@ -1,10 +1,10 @@
-.map-panel {
+#map-panel {
   display: inline-block;
   padding: 0 50px;
   width: 60%;
 }
 
-.map {
+#map {
   border: 2px solid #eee;
   height: 480px;
   margin: 100px auto;
@@ -12,7 +12,7 @@
 }
 
 @media only screen and (max-width: 500px) {
-  .map {
+  #map {
     display: none;
   }
 }

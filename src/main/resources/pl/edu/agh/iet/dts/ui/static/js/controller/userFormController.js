@@ -1,23 +1,19 @@
-app.controller('userFormController', ['$http', '$scope', function ($http, $scope) {
+app.controller('userFormController', ['$http', '$scope', '$rootScope', '$interval', function ($http, $scope, $rootScope, $interval) {
 
     $scope.submitForm = function () {
-        $http({
-            url    : '/users/' + $scope.userID + '/preferences',
-            method : 'POST',
-            data   : {
-                points          : $scope.points,
-                period          : $scope.period,
-                aggregationTime : $scope.aggregationTime
-            }
-        });
-    };
+        $('#form-panel').css('display', 'none');
 
-    $scope.getPreferences = function () {
-        $http.get('/users/' + $scope.userID + '/preferences').then(
+        $http({
+            url: '/users/' + $scope.userID + '/preferences',
+            method: 'POST',
+            data: {
+                points: $scope.points,
+                period: $scope.period,
+                aggregationTime: $scope.aggregationTime
+            }
+        }).then(
             function (response) {
-                // TODO: Use this response object to display user's preferences and to perform map update requests
-                // regularly.
-                console.log(response);
+                $scope.configure();
             },
             function (error) {
                 console.log(error);
@@ -25,6 +21,30 @@ app.controller('userFormController', ['$http', '$scope', function ($http, $scope
         );
     };
 
-    // $scope.getPreferences();
+    $scope.getPreferences = function () {
+        $http.get('/users/' + $scope.userID + '/preferences').then(
+            function (response) {
+                $scope.period = response.data.period;
+                $scope.points = response.data.points;
+                $scope.aggregationTime = response.data.aggregationTime;
+
+                $scope.configure();
+            },
+            function (error) {
+                console.log(error);
+            }
+        );
+    };
+
+    $scope.configure = function () {
+        document.getElementById('time-period').placeholder = $scope.period;
+        document.getElementById('aggregate-points').placeholder = $scope.points;
+        document.getElementById('update-every').placeholder = $scope.aggregationTime;
+
+        $interval.cancel($rootScope.promise);
+        $rootScope.promise = $interval($rootScope.locationRequest, $scope.aggregationTime * 1000);
+    };
+
+    $scope.getPreferences();
 
 }]);

@@ -1,4 +1,4 @@
-app.controller('loginController', ['$http', '$scope', '$location', function ($http, $scope, $location) {
+app.controller('loginController', ['$http', '$scope', '$rootScope', '$location', '$interval', function ($http, $scope, $rootScope, $location, $interval) {
 
     $scope.getUser = function () {
         $http.get('/me').then(
@@ -20,26 +20,29 @@ app.controller('loginController', ['$http', '$scope', '$location', function ($ht
                 $scope.userId = null;
                 $scope.userName = null;
 
+                $interval.cancel($rootScope.promise);
                 $location.path('/');
-            }, function (error) {
+            },
+            function (error) {
                 console.log(error);
 
                 $scope.authenticated = false;
                 $scope.userId = null;
                 $scope.userName = null;
 
+                $interval.cancel($rootScope.promise);
                 $location.path('/');
             }
         );
     };
 
-    $('.my-toggle').click(function() {
-        property = $('.form-panel').css('display');
+    $('#my-toggle').click(function() {
+        property = $('#form-panel').css('display');
         
         if (property === 'none') {
-            $('.form-panel').css('display', 'inline-block');
+            $('#form-panel').css('display', 'inline-block');
         } else {
-            $('.form-panel').css('display', 'none');
+            $('#form-panel').css('display', 'none');
         }
     });
 
