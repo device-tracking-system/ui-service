@@ -13,7 +13,7 @@ app.controller('userFormController', ['$http', '$scope', '$rootScope', '$interva
             }
         }).then(
             function (response) {
-                $scope.configure();
+                $scope.getPreferences();
             },
             function (error) {
                 console.log(error);
@@ -24,25 +24,21 @@ app.controller('userFormController', ['$http', '$scope', '$rootScope', '$interva
     $scope.getPreferences = function () {
         $http.get('/users/' + $scope.userID + '/preferences').then(
             function (response) {
-                $scope.period = response.data.period;
-                $scope.points = response.data.points;
-                $scope.aggregationTime = response.data.aggregationTime;
+                $rootScope.period = response.data.period;
+                $rootScope.points = response.data.points;
+                $rootScope.aggregationTime = response.data.aggregationTime;
 
-                $scope.configure();
+                document.getElementById('time-period').placeholder = $rootScope.period;
+                document.getElementById('aggregate-points').placeholder = $rootScope.points;
+                document.getElementById('update-every').placeholder = $rootScope.aggregationTime;
+
+                $interval.cancel($rootScope.promise);
+                $rootScope.promise = $interval($rootScope.locationRequest, $rootScope.aggregationTime * 1000);
             },
             function (error) {
                 console.log(error);
             }
         );
-    };
-
-    $scope.configure = function () {
-        document.getElementById('time-period').placeholder = $scope.period;
-        document.getElementById('aggregate-points').placeholder = $scope.points;
-        document.getElementById('update-every').placeholder = $scope.aggregationTime;
-
-        $interval.cancel($rootScope.promise);
-        $rootScope.promise = $interval($rootScope.locationRequest, $scope.aggregationTime * 1000);
     };
 
     $scope.getPreferences();

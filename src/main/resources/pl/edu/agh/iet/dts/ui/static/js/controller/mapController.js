@@ -3,13 +3,13 @@ app.controller('mapController', ['$http', '$scope', '$rootScope', '$interval', f
     $rootScope.promise = null;
     $rootScope.lastSync = null;
 
-    $scope.period = 60;
-    $scope.points = 2;
-    $scope.aggregationTime = 10;
+    $rootScope.period = 60;
+    $rootScope.points = 4;
+    $rootScope.aggregationTime = 10;
 
     let map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 50.04, lng: 19.57},
-        scrollwheel: false,
+        scrollwheel: true,
         zoom: 8
     });
 
@@ -20,8 +20,9 @@ app.controller('mapController', ['$http', '$scope', '$rootScope', '$interval', f
         map: map
     });
 
-    let checkpoint = [];
-
+    let checkpointLimit = 0;
+    let checkpointArray = [];
+    
     $rootScope.locationRequest = function () {
         $http.get('/users/' + $scope.userID + '/positions').then(
             function (response) {
@@ -46,12 +47,16 @@ app.controller('mapController', ['$http', '$scope', '$rootScope', '$interval', f
     };
 
     $scope.createRoute = function (data) {
-        if (checkpoint.length === data.length) {
+        if (checkpointArray.length === data.length && checkpointLimit === $rootScope.points) {
             return;
         }
 
-        checkpoint = data.slice();
+        checkpointLimit = $rootScope.points;
+        checkpointArray = data.slice();
         let routeRequest;
+
+        num = Math.min($rootScope.points, 10)
+        data = data.slice(Math.max(0, data.length - num));
 
         if (data.length === 0) {
             console.log('Nothing to show. There is no GPS data for this user.');
@@ -65,18 +70,15 @@ app.controller('mapController', ['$http', '$scope', '$rootScope', '$interval', f
                 travelMode: travelMode
             };
         } else {
-            num = Math.min($scope.points, 10)
-            data = data.slice(Math.max(0, data.length - num));
-
-            var startPoint = data.shift();
-            var endPoint = data.pop();
-            var wayPoints = [];
+            let startPoint = data.shift();
+            let endPoint = data.pop();
+            let wayPoints = [];
 
             data.forEach(function (wayPoint) {
                 wayPoints.push({
                     location: new google.maps.LatLng(wayPoint.latitude, wayPoint.longitude),
                     stopover: wayPoint.stop
-                })
+                });
             });
 
             routeRequest = {
@@ -101,6 +103,6 @@ app.controller('mapController', ['$http', '$scope', '$rootScope', '$interval', f
     };
 
     $rootScope.locationRequest();
-    $rootScope.promise = $interval($rootScope.locationRequest, $scope.aggregationTime * 1000);
+    $rootScope.promise = $interval($rootScope.locationRequest, $rootScope.aggregationTime * 1000);
 
 }]);
