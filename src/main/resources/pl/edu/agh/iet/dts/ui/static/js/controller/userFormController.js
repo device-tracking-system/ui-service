@@ -2,6 +2,9 @@ app.controller('userFormController', ['$http', '$scope', '$rootScope', '$interva
 
     $scope.submitForm = function () {
         $('#form-panel').css('display', 'none');
+        
+        $interval.cancel($rootScope.promise);
+        $rootScope.promise = $interval($rootScope.locationRequest, $rootScope.aggregationTime * 60 * 1000);
 
         $http({
             url: '/users/' + $scope.userID + '/preferences',
@@ -32,8 +35,7 @@ app.controller('userFormController', ['$http', '$scope', '$rootScope', '$interva
                 document.getElementById('aggregate-points').placeholder = $rootScope.points;
                 document.getElementById('update-every').placeholder = $rootScope.aggregationTime;
 
-                $interval.cancel($rootScope.promise);
-                $rootScope.promise = $interval($rootScope.locationRequest, $rootScope.aggregationTime * 1000);
+                $rootScope.locationRequest();
             },
             function (error) {
                 console.log(error);
@@ -41,6 +43,12 @@ app.controller('userFormController', ['$http', '$scope', '$rootScope', '$interva
         );
     };
 
-    $scope.getPreferences();
+    $scope.initForm = function () {
+        document.getElementById('time-period').placeholder = 'Currently not set';
+        document.getElementById('aggregate-points').placeholder = 'Currently not set';
+        document.getElementById('update-every').placeholder = 'Currently not set';
+    };
+
+    $scope.initForm();
 
 }]);
