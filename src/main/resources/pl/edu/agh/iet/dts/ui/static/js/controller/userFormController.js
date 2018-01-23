@@ -4,7 +4,7 @@ app.controller('userFormController', ['$http', '$scope', '$rootScope', '$interva
         $('#form-panel').css('display', 'none');
         
         $interval.cancel($rootScope.promise);
-        $rootScope.promise = $interval($rootScope.locationRequest, $rootScope.aggregationTime * 60 * 1000);
+        $rootScope.promise = $interval($rootScope.locationRequest, $scope.aggregationTime * 60 * 1000);
 
         $http({
             url: '/users/' + $scope.userID + '/preferences',
