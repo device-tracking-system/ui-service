@@ -5,7 +5,6 @@ app.controller('mapController', ['$http', '$scope', '$rootScope', function ($htt
     $rootScope.aggregationTime = null;
 
     $rootScope.lastSync = 'Set preferences in order to display a route.';
-    $rootScope.promise = null;
 
     let map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 50.04, lng: 19.57},
@@ -21,7 +20,6 @@ app.controller('mapController', ['$http', '$scope', '$rootScope', function ($htt
     });
 
     let checkpoint = [];
-    let limit = 0;
     
     $rootScope.locationRequest = function () {
         $http.get('/users/' + $scope.userID + '/positions').then(
@@ -60,15 +58,16 @@ app.controller('mapController', ['$http', '$scope', '$rootScope', function ($htt
     };
 
     $scope.createRoute = function (data) {
-        if (limit === $rootScope.points && !$scope.havePointsChanged(checkpoint, data)) {
+        if (!$scope.havePointsChanged(checkpoint, data)) {
             return;
         }
 
         checkpoint = data.slice();
-        limit = $rootScope.points;
         let routeRequest;
 
-        if (data.length === 1) {
+        if (data.length === 0) {
+            $rootScope.lastSync = 'Nothing to show. There is no GPS data for this user.';
+        } else if (data.length === 1) {
             let singlePointCoordinates = new google.maps.LatLng(data[0].latitude, data[0].longitude);
 
             routeRequest = {
@@ -77,7 +76,7 @@ app.controller('mapController', ['$http', '$scope', '$rootScope', function ($htt
                 waypoints: [],
                 travelMode: travelMode
             };
-        } else if (data.length > 1) {
+        } else {
             let startPoint = data.shift();
             let endPoint = data.pop();
             let wayPoints = [];

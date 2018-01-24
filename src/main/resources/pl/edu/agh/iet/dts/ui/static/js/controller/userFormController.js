@@ -3,8 +3,11 @@ app.controller('userFormController', ['$http', '$scope', '$rootScope', '$interva
     $scope.submitForm = function () {
         $('#form-panel').css('display', 'none');
         
-        $interval.cancel($rootScope.promise);
-        $rootScope.promise = $interval($rootScope.locationRequest, $rootScope.aggregationTime * 60 * 1000);
+        if ($rootScope.promise !== null) {
+            $interval.cancel($rootScope.promise);
+        }
+
+        $rootScope.promise = $interval($rootScope.locationRequest, $scope.aggregationTime * 60 * 1000);
 
         $http({
             url: '/users/' + $scope.userID + '/preferences',
@@ -31,11 +34,14 @@ app.controller('userFormController', ['$http', '$scope', '$rootScope', '$interva
                 $rootScope.points = response.data.points;
                 $rootScope.aggregationTime = response.data.aggregationTime;
 
-                document.getElementById('time-period').placeholder = $rootScope.period;
-                document.getElementById('aggregate-points').placeholder = $rootScope.points;
-                document.getElementById('update-every').placeholder = $rootScope.aggregationTime;
+                const message = 'Currently not set';
+                document.getElementById('time-period').placeholder = $rootScope.period || message;
+                document.getElementById('aggregate-points').placeholder = $rootScope.points || message;
+                document.getElementById('update-every').placeholder = $rootScope.aggregationTime || message;
 
-                $rootScope.locationRequest();
+                if (!$rootScope.promise) {
+                    $rootScope.promise = $interval($rootScope.locationRequest, $rootScope.aggregationTime * 60 * 1000);
+                }
             },
             function (error) {
                 console.log(error);
@@ -43,12 +49,6 @@ app.controller('userFormController', ['$http', '$scope', '$rootScope', '$interva
         );
     };
 
-    $scope.initForm = function () {
-        document.getElementById('time-period').placeholder = 'Currently not set';
-        document.getElementById('aggregate-points').placeholder = 'Currently not set';
-        document.getElementById('update-every').placeholder = 'Currently not set';
-    };
-
-    $scope.initForm();
+    $scope.getPreferences();
 
 }]);
